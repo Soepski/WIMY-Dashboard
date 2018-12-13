@@ -22,7 +22,7 @@ namespace WIMY_Dashboard
     public partial class MainWindow : Window
     {
         Database db = new Database();
-        List<WIMY> wimy = new List<WIMY>();
+        List<WIMY> wimylijst = new List<WIMY>();
         public MainWindow()
         {
             InitializeComponent();
@@ -32,9 +32,24 @@ namespace WIMY_Dashboard
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
             db.Connect();
-            DataTable dt = new DataTable();
-            dt = db.ExecuteStringQuery("SELECT * FROM wimy");
-            
+
+            DataTable result = db.ExecuteStringQuery("SELECT * FROM wimy");
+
+            foreach (DataRow item in result.Rows)
+            {
+                DataRow dr = item;
+
+                WIMY wimy = new WIMY(
+
+                int.Parse(dr["WIMY_ID"].ToString()),
+                int.Parse(dr["ClusterID"].ToString()),
+                int.Parse(dr["OnderhoudID"].ToString()),
+                dr["Locatie"].ToString(),
+                int.Parse(dr["Status"].ToString())
+            );
+                wimylijst.Add(wimy);
+            }
+
         }
 
         private void btStatusChange_Click(object sender, RoutedEventArgs e)
