@@ -37,7 +37,7 @@
                         <ColumnDefinition Width="5*"/>
                         <ColumnDefinition Width="50*"/>
                     </Grid.ColumnDefinitions>
-                    <ComboBox Grid.Column="0" Name="cbStatus">
+                    <ComboBox Grid.Column="0" Name="cbStatus" SelectedIndex="0">
                         <ComboBoxItem Content="Actief"/>
                         <ComboBoxItem Content="Inactief"/>
                     </ComboBox>
