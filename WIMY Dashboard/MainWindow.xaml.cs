@@ -62,7 +62,23 @@ namespace WIMY_Dashboard
 
         private void btStatusChange_Click(object sender, RoutedEventArgs e)
         {
-            
+            if (lvStatus.SelectedItem != null)
+            {
+                int Index = lvStatus.SelectedIndex;
+                string Status = lvStatus.SelectedItem.ToString();
+
+                if (cbStatus.Text == "Actief")
+                {
+                    Status = Status.Replace("Inactief", "Actief");
+                }
+                else
+                {
+                    Status = Status.Replace("Actief", "Inactief");
+                }
+
+                lvStatus.Items.RemoveAt(Index);
+                lvStatus.Items.Insert(Index, Status);
+            }
         }
     }
 }
