@@ -26,39 +26,22 @@
                 <ColumnDefinition Width="195*"/>
                 <ColumnDefinition Width="10*"/>
             </Grid.ColumnDefinitions>
-            <GroupBox Grid.Column="1" Grid.Row="1" Header="WIMY status" Name="gbWIMYstatus">
-                <ListView Name="lvStatus" Margin="0,0,0,0">
-                    <ListViewItem Content="WIMY 1: Actief"/>
-                    <ListViewItem Content="WIMY 2: Actief"/>
-                    <ListViewItem Content="WIMY 3: Inactief"/>
-                    <ListViewItem Content="WIMY 4: Inactief"/>
-                    <ListViewItem Content="WIMY 5: Actief"/>
+            <GroupBox Grid.Column="1" Grid.Row="1" Header="WIMY status" Name="gbWIMYstatus" Margin="0,0,0,70" Grid.RowSpan="3">
+                <ListView Name="lvStatus" Margin="0,0,0,0" ItemsSource="{Binding}">
                 </ListView>
             </GroupBox>
-            <GroupBox Grid.Column="1" Grid.Row="3" Header="Status veranderen" Name="gbChangeStatus">
+            <GroupBox Grid.Column="1" Grid.Row="3" Header="Status veranderen" Name="gbChangeStatus" Margin="0,64,0,0">
                 <Grid>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="50*"/>
                         <ColumnDefinition Width="5*"/>
                         <ColumnDefinition Width="50*"/>
                     </Grid.ColumnDefinitions>
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="50*"/>
-                        <RowDefinition Height="50*"/>
-                        <RowDefinition Height="50*"/>
-                    </Grid.RowDefinitions>
-                    <ListView Name="lvWIMYs" Margin="0,0,0,0" Grid.Column="0" Grid.RowSpan="3">
-                        <ListViewItem Content="WIMY 1: Actief"/>
-                        <ListViewItem Content="WIMY 2: Actief"/>
-                        <ListViewItem Content="WIMY 3: Inactief"/>
-                        <ListViewItem Content="WIMY 4: Inactief"/>
-                        <ListViewItem Content="WIMY 5: Actief"/>
-                    </ListView>
-                    <ComboBox Grid.Column="2" Name="cbStatus">
+                    <ComboBox Grid.Column="0" Name="cbStatus">
                         <ComboBoxItem Content="Actief"/>
                         <ComboBoxItem Content="Inactief"/>
                     </ComboBox>
-                    <Button Grid.Column="2" Grid.Row="3" Name="btStatusChange" Content="Opslaan" Click="btStatusChange_Click"/>
+                    <Button Grid.Column="2" Name="btStatusChange" Content="Opslaan" Click="btStatusChange_Click"/>
                 </Grid>
                 
             </GroupBox>

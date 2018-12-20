@@ -50,14 +50,19 @@ namespace WIMY_Dashboard
                 wimylijst.Add(wimy);
             }
 
+            DataTable statusresult = db.ExecuteStringQuery("SELECT wimy.WIMY_ID, CASE WHEN wimy.status = 1 THEN 'Actief' ELSE 'Inactief' END AS STATUS FROM wimy");
+
+            foreach (DataRow row in statusresult.Rows)
+            {
+                lvStatus.Items.Add($"WIMY { row["WIMY_ID"]}: { row["STATUS"]}");
+            }
+
+            db.Disconnect();
         }
 
         private void btStatusChange_Click(object sender, RoutedEventArgs e)
         {
-            if (true)
-            {
-
-            }
+            
         }
     }
 }
