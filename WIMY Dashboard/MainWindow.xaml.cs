@@ -24,7 +24,7 @@ namespace WIMY_Dashboard
     public partial class MainWindow : Window
     {
         Database db = new Database();
-        SerialPort serial = new SerialPort("COM3", 9600);
+        SerialPort serial = new SerialPort("COM1", 9600);
         List<WIMY> wimylijst = new List<WIMY>();
         public MainWindow()
         {
@@ -105,6 +105,37 @@ namespace WIMY_Dashboard
 
                 db.Disconnect();
             }
+        }
+
+        private void btnAutoOpslaan_Click(object sender, RoutedEventArgs e)
+        {
+            db.Connect();
+
+            string geselecteerdeWimy = ((ListBoxItem)lbAutoStatus.SelectedValue).Content.ToString();
+
+            string vantijd = tbAutoVan.Text;
+            string tottijd = tbAutoTot.Text;
+
+            db.ExecuteStringQuery($"UPDATE wimy SET VanTijd='{vantijd}', TotTijd='{tottijd}' WHERE  WIMY_ID= {geselecteerdeWimy};");
+
+            db.Disconnect();
+        }
+
+        private void lvAutoStatus_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            db.Connect();
+
+            string geselecteerdeWimy = ((ListBoxItem)lbAutoStatus.SelectedValue).Content.ToString();
+
+            DataTable autoResult = db.ExecuteStringQuery($"SELECT VanTijd, TotTijd FROM wimy WHERE WIMY_ID = {geselecteerdeWimy}");
+
+            foreach (DataRow row in autoResult.Rows)
+            {
+                tbAutoVan.Text = row["VanTijd"].ToString();
+                tbAutoTot.Text = row["TotTijd"].ToString();
+            }
+
+            db.Disconnect();
         }
     }
 }

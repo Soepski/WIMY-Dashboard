@@ -43,7 +43,7 @@
                     </ComboBox>
                     <Button Grid.Column="2" Name="btStatusChange" Content="Opslaan" Click="btStatusChange_Click"/>
                 </Grid>
-                
+
             </GroupBox>
             <GroupBox Grid.Column="1" Grid.Row="5" Header="Automatische status" Name="gbAutoStatus">
                 <Grid>
@@ -58,17 +58,19 @@
                         <RowDefinition Height="30*"/>
                         <RowDefinition Height="50*"/>
                     </Grid.RowDefinitions>
-                    <TextBlock Text="Van:" Name="tbautovan" Grid.Column="0" Grid.Row="0"/>
-                    <TextBlock Text="Tot:" Name="tbautotot" Grid.Column="0" Grid.Row="2"/>
-                    <TextBox Name="tbAutoVan" Grid.Column="0" Grid.Row="1" Text="21:00"/>
-                    <TextBox Name="tbAutoTot" Grid.Column="0" Grid.Row="3" Text="8:00"/>
-                    <ListView Name="lvAutoStatus" Grid.Column="2" Grid.RowSpan="4">
-                        <ListViewItem Content="WIMY 1"/>
-                        <ListViewItem Content="WIMY 2"/>
-                        <ListViewItem Content="WIMY 3"/>
-                        <ListViewItem Content="WIMY 4"/>
-                        <ListViewItem Content="WIMY 5"/>
-                    </ListView>
+                    <TextBlock Text="Van:" x:Name="lbautovan" Grid.Column="0" Grid.Row="0"/>
+                    <TextBlock Text="Tot:" x:Name="lbautotot" Grid.Column="0" Margin="72,0,0,0"/>
+                    <TextBlock Text="Wimy:" x:Name="lbWimyauto" Grid.Column="2" Margin="0,0,0,0"/>
+                    <TextBox Name="tbAutoVan" Grid.Column="0" Grid.Row="1" Text="21:00" Margin="0,0,76,0"/>
+                    <TextBox Name="tbAutoTot" Grid.Column="0" Grid.Row="1" Text="8:00" Margin="72,0,0,0"/>
+                    <Button Name="btnAutoOpslaan" Grid.Column="0" Grid.Row="3" Content="Opslaan" Click="btnAutoOpslaan_Click"/>
+                    <ListBox Name="lbAutoStatus" Grid.Column="2" Grid.RowSpan="3" SelectionChanged="lvAutoStatus_SelectionChanged" Grid.Row="1">
+                        <ListBoxItem Content="1"/>
+                        <ListBoxItem Content="2"/>
+                        <ListBoxItem Content="3"/>
+                        <ListBoxItem Content="4"/>
+                        <ListBoxItem Content="66"/>
+                    </ListBox>
                 </Grid>
             </GroupBox>
             <GroupBox Grid.Column="3" Grid.Row="1" Header="Status grafiek" Name="gbGraphs" Grid.RowSpan="3" Grid.ColumnSpan="3">
