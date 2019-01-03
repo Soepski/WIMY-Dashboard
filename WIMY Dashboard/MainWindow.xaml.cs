@@ -78,6 +78,29 @@ namespace WIMY_Dashboard
 
                 lvStatus.Items.RemoveAt(Index);
                 lvStatus.Items.Insert(Index, Status);
+
+                db.Connect();
+
+                List<int> IDList = new List<int>();
+                List<int> StatusList = new List<int>();
+                int lvStatusCount = lvStatus.Items.Count;
+                for (int count = 0; count < lvStatusCount; count++)
+                {
+                    string wimyinfo = Convert.ToString(lvStatus.Items[count]);
+                    string wimyinfoID = wimyinfo.Remove(0, 5);
+                    int wimyID = Convert.ToInt32(wimyinfoID.Remove(1, wimyinfoID.Length - 1));
+                    string wimyinfoStatus = wimyinfo.Remove(0, 7);
+                    int wimyStatus = 0;
+                    if (wimyinfoStatus == "actief")
+                    {
+                        wimyStatus = 1;
+                    }
+                    IDList.Add(wimyID);
+                    StatusList.Add(wimyStatus);
+                }
+                MessageBox.Show($"{IDList[2]} {StatusList[2]}");
+
+                db.Disconnect();
             }
         }
     }
