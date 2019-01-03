@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data;
+using System.IO.Ports;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -22,11 +24,12 @@ namespace WIMY_Dashboard
     public partial class MainWindow : Window
     {
         Database db = new Database();
+        SerialPort serial = new SerialPort("COM3", 9600);
         List<WIMY> wimylijst = new List<WIMY>();
         public MainWindow()
         {
             InitializeComponent();
-            
+            serial.Open();
         }
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
