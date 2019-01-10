@@ -26,7 +26,7 @@ namespace WIMY_Dashboard
     public partial class MainWindow : Window
     {
         Database db = new Database();
-        SerialPort serial = new SerialPort("COM3", 9600);
+        SerialPort serial = new SerialPort("COM5", 9600);
         List<WIMY> wimylijst = new List<WIMY>();
         public MainWindow()
         {
@@ -92,10 +92,13 @@ namespace WIMY_Dashboard
                 if (cbStatus.Text == "Actief")
                 {
                     Status = Status.Replace("Inactief", "Actief");
+                    serial.WriteLine("U");
+
                 }
                 else
                 {
                     Status = Status.Replace("Actief", "Inactief");
+                    serial.WriteLine("A");
                 }
 
                 lvStatus.Items.RemoveAt(Index);
@@ -173,14 +176,12 @@ namespace WIMY_Dashboard
 
         void timer_Tick(object sender, EventArgs e)
         {
-            if (serial.ReadExisting().ToString() == "")
-            {
-                //Do nothing
-            }
-            else
+            if (serial.IsOpen)
             {
                 lvMeldingen.Items.Add($"{serial.ReadLine().ToString()} {DateTime.Now.ToString()}");
+                serial.Close();
             }
+            serial.Open();         
             
         }
 
