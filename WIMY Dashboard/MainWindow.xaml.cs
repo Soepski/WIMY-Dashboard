@@ -71,6 +71,11 @@ namespace WIMY_Dashboard
 
         private void btStatusChange_Click(object sender, RoutedEventArgs e)
         {
+            StatusChange();
+        }
+
+        private void StatusChange()
+        {
             if (lvStatus.SelectedItem != null)
             {
                 int Index = lvStatus.SelectedIndex;
@@ -107,13 +112,24 @@ namespace WIMY_Dashboard
                     IDList.Add(wimyID);
                     StatusList.Add(wimyStatus);
                 }
-                foreach(int ID in IDList)
+                using (System.IO.StreamWriter file = new System.IO.StreamWriter(@"C:\Users\Public\LogFile.txt"))
                 {
-                    db.ExecuteStringQuery($"UPDATE wimy SET status = {StatusList[IDList.IndexOf(ID)]} WHERE WIMY_ID = {IDList[IDList.IndexOf(ID)]}");
-                }
+                    file.WriteLine($"You have edited the states of the WIMY's on {System.DateTime.Now}");
+                    foreach (int ID in IDList)
+                    {
+                        db.ExecuteStringQuery($"UPDATE wimy SET status = {StatusList[IDList.IndexOf(ID)]} WHERE WIMY_ID = {IDList[IDList.IndexOf(ID)]}");
+                        file.WriteLine($"The status of WIMY {ID} was set to {LogStatusWrite(StatusList[IDList.IndexOf(ID)])}");
+                    }
+                } 
 
                 db.Disconnect();
             }
+        }
+
+        private string LogStatusWrite(int state)
+        {
+            if (state == 1) { return "Actief"; }
+            else { return "Inactief"; }
         }
 
         private void btnAutoOpslaan_Click(object sender, RoutedEventArgs e)
