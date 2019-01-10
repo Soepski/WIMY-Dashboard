@@ -41,7 +41,7 @@ namespace WIMY_Dashboard
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.ToString());
+                MessageBox.Show("Arduino niet goed aangesloten");
             }
 
         }
