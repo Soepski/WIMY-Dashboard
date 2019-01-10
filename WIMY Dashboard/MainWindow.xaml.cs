@@ -26,18 +26,20 @@ namespace WIMY_Dashboard
     public partial class MainWindow : Window
     {
         Database db = new Database();
-        SerialPort serial = new SerialPort("COM5", 9600);
+        SerialPort serial = new SerialPort("COM3", 9600);
         List<WIMY> wimylijst = new List<WIMY>();
         public MainWindow()
         {
             InitializeComponent();
             try
             {
+                serial.DataReceived += new SerialDataReceivedEventHandler(DataReceivedHandler);
+
                 serial.Open();
-                DispatcherTimer timer = new DispatcherTimer();
-                timer.Interval = TimeSpan.FromSeconds(5);
-                timer.Tick += timer_Tick;
-                timer.Start();
+                //DispatcherTimer timer = new DispatcherTimer();
+                //timer.Interval = TimeSpan.FromSeconds(5);
+                //timer.Tick += timer_Tick;
+                //timer.Start();
             }
             catch (Exception ex)
             {
@@ -175,21 +177,28 @@ namespace WIMY_Dashboard
             db.Disconnect();
         }
 
-        void timer_Tick(object sender, EventArgs e)
+        public void DataReceivedHandler(object sender, SerialDataReceivedEventArgs e)
         {
-            if (serial.IsOpen)
-            {
-                string SerialMelding = serial.ReadLine().ToString();
-                lvMeldingen.Items.Add($"{SerialMelding} {DateTime.Now.ToString()}");
-                using (System.IO.StreamWriter file = new System.IO.StreamWriter(@"C:\Users\Public\LogFile.txt", true))
-                {
-                    file.WriteLine(SerialMelding + $" {DateTime.Now.ToString()}");
-                    file.WriteLine("");
-                }
-            }
-            serial.Open();         
-            
+            string indata = serial.ReadExisting();
+            //string SerialMelding = serial.ReadLine().ToString();
+            lvMeldingen.Items.Add($"{indata} {DateTime.Now.ToString()}");
         }
+
+        //void timer_Tick(object sender, EventArgs e)
+        //{
+        //    if (serial.IsOpen)
+        //    {
+        //        string SerialMelding = serial.ReadLine().ToString();
+        //        lvMeldingen.Items.Add($"{SerialMelding} {DateTime.Now.ToString()}");
+        //        using (System.IO.StreamWriter file = new System.IO.StreamWriter(@"C:\Users\Public\LogFile.txt", true))
+        //        {
+        //            file.WriteLine(SerialMelding + $" {DateTime.Now.ToString()}");
+        //            file.WriteLine("");
+        //        }
+        //    }
+        //    serial.Open();         
+
+        //}
 
     }
 }
