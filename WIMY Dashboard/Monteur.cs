@@ -13,5 +13,14 @@ namespace WIMY_Dashboard
         public string Adres { get; set; }
         public string Woonplaats { get; set; }
         public bool Spoedonderhoud { get; set; }
+
+        public Monteur(int id, string naam, string adres, string woonplaats, bool spoed)
+        {
+            ID = id;
+            Naam = naam;
+            Adres = adres;
+            Woonplaats = woonplaats;
+            Spoedonderhoud = spoed;
+        }
     }
 }
