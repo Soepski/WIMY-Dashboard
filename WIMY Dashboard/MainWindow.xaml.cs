@@ -120,7 +120,7 @@ namespace WIMY_Dashboard
                     IDList.Add(wimyID);
                     StatusList.Add(wimyStatus);
                 }
-                using (System.IO.StreamWriter file = new System.IO.StreamWriter(@"C:\Users\Public\LogFile.txt"))
+                using (System.IO.StreamWriter file = new System.IO.StreamWriter(@"C:\Users\Public\StatusLog.txt", true))
                 {
                     file.WriteLine($"You have edited the states of the WIMY's on {System.DateTime.Now}");
                     foreach (int ID in IDList)
@@ -128,6 +128,7 @@ namespace WIMY_Dashboard
                         db.ExecuteStringQuery($"UPDATE wimy SET status = {StatusList[IDList.IndexOf(ID)]} WHERE WIMY_ID = {IDList[IDList.IndexOf(ID)]}");
                         file.WriteLine($"The status of WIMY {ID} was set to {LogStatusWrite(StatusList[IDList.IndexOf(ID)])}");
                     }
+                    file.WriteLine("");
                 } 
 
                 db.Disconnect();
@@ -179,7 +180,13 @@ namespace WIMY_Dashboard
             }
             else
             {
-                lvMeldingen.Items.Add($"{serial.ReadLine().ToString()} {DateTime.Now.ToString()}");
+                string SerialMelding = serial.ReadLine().ToString();
+                lvMeldingen.Items.Add($"{SerialMelding} {DateTime.Now.ToString()}");
+                using (System.IO.StreamWriter file = new System.IO.StreamWriter(@"C:\Users\Public\LogFile.txt", true))
+                {
+                    file.WriteLine(SerialMelding + $" {DateTime.Now.ToString()}");
+                    file.WriteLine("");
+                }
             }
             
         }
