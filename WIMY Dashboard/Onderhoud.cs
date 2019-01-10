@@ -12,5 +12,13 @@ namespace WIMY_Dashboard
         public int WIMY_ID { get; set; }
         public int Monteur_ID { get; set; }
         public DateTime Date { get; set; }
+
+        public Onderhoud(int id, int wimy_id, int monteur_id, DateTime date)
+        {
+            ID = id;
+            WIMY_ID = wimy_id;
+            Monteur_ID = monteur_id;
+            Date = date;
+        }
     }
 }
