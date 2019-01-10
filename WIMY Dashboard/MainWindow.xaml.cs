@@ -98,16 +98,19 @@ namespace WIMY_Dashboard
                     string wimyinfo = Convert.ToString(lvStatus.Items[count]);
                     string wimyinfoID = wimyinfo.Remove(0, 5);
                     int wimyID = Convert.ToInt32(wimyinfoID.Remove(1, wimyinfoID.Length - 1));
-                    string wimyinfoStatus = wimyinfo.Remove(0, 7);
+                    string wimyinfoStatus = wimyinfo.Remove(0, 8);
                     int wimyStatus = 0;
-                    if (wimyinfoStatus == "actief")
+                    if (wimyinfoStatus == "Actief")
                     {
                         wimyStatus = 1;
                     }
                     IDList.Add(wimyID);
                     StatusList.Add(wimyStatus);
                 }
-                MessageBox.Show($"{IDList[2]} {StatusList[2]}");
+                foreach(int ID in IDList)
+                {
+                    db.ExecuteStringQuery($"UPDATE wimy SET status = {StatusList[IDList.IndexOf(ID)]} WHERE WIMY_ID = {IDList[IDList.IndexOf(ID)]}");
+                }
 
                 db.Disconnect();
             }
