@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Diagnostics;
 using System.IO.Ports;
 using System.Linq;
 using System.Text;
@@ -15,6 +16,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.Windows.Threading;
 
 namespace WIMY_Dashboard
 {
@@ -24,12 +26,16 @@ namespace WIMY_Dashboard
     public partial class MainWindow : Window
     {
         Database db = new Database();
-        SerialPort serial = new SerialPort("COM1", 9600);
+        SerialPort serial = new SerialPort("COM3", 9600);
         List<WIMY> wimylijst = new List<WIMY>();
         public MainWindow()
         {
             InitializeComponent();
-            //serial.Open();
+            serial.Open();
+            DispatcherTimer timer = new DispatcherTimer();
+            timer.Interval = TimeSpan.FromSeconds(5);
+            timer.Tick += timer_Tick;
+            timer.Start();
         }
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
@@ -137,5 +143,12 @@ namespace WIMY_Dashboard
 
             db.Disconnect();
         }
+
+        void timer_Tick(object sender, EventArgs e)
+        {
+
+            lvMeldingen.Items.Add($"{serial.ReadLine().ToString()} {Da );
+        }
+
     }
 }

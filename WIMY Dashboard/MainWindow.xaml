@@ -78,11 +78,7 @@
             </GroupBox>
             <GroupBox Grid.Column="3" Grid.Row="5" Header="Meldingen" Name="gbMeldingen">
                 <ListView Name="lvMeldingen">
-                    <ListViewItem Content="WIMY 1 22-11 18:31 "/>
-                    <ListViewItem Content="WIMY 2 22-11 18:31 "/>
-                    <ListViewItem Content="WIMY 3 22-11 18:31 "/>
-                    <ListViewItem Content="WIMY 4 22-11 18:31 "/>
-                    <ListViewItem Content="WIMY 5 22-11 18:31 "/>
+                    
                 </ListView>
             </GroupBox>
             <GroupBox Grid.Column="5" Grid.Row="5" Header="Plattegrond" Name="gbPlattegrond">
