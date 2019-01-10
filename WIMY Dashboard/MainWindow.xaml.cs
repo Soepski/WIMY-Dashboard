@@ -26,16 +26,24 @@ namespace WIMY_Dashboard
     public partial class MainWindow : Window
     {
         Database db = new Database();
-        SerialPort serial = new SerialPort("COM5", 9600);
+        SerialPort serial = new SerialPort("COM3", 9600);
         List<WIMY> wimylijst = new List<WIMY>();
         public MainWindow()
         {
             InitializeComponent();
-            serial.Open();
-            DispatcherTimer timer = new DispatcherTimer();
-            timer.Interval = TimeSpan.FromSeconds(5);
-            timer.Tick += timer_Tick;
-            timer.Start();
+            try
+            {
+                serial.Open();
+                DispatcherTimer timer = new DispatcherTimer();
+                timer.Interval = TimeSpan.FromSeconds(5);
+                timer.Tick += timer_Tick;
+                timer.Start();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.ToString());
+            }
+
         }
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
@@ -165,7 +173,15 @@ namespace WIMY_Dashboard
 
         void timer_Tick(object sender, EventArgs e)
         {
-            lvMeldingen.Items.Add($"{serial.ReadLine().ToString()} {DateTime.Now.ToString()}");
+            if (serial.ReadExisting().ToString() == "")
+            {
+                //Do nothing
+            }
+            else
+            {
+                lvMeldingen.Items.Add($"{serial.ReadLine().ToString()} {DateTime.Now.ToString()}");
+            }
+            
         }
 
     }
