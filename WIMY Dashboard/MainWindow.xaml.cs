@@ -26,7 +26,7 @@ namespace WIMY_Dashboard
     public partial class MainWindow : Window
     {
         Database db = new Database();
-        SerialPort serial = new SerialPort("COM3", 9600);
+        SerialPort serial = new SerialPort("COM5", 9600);
         List<WIMY> wimylijst = new List<WIMY>();
         public MainWindow()
         {
@@ -149,8 +149,7 @@ namespace WIMY_Dashboard
 
         void timer_Tick(object sender, EventArgs e)
         {
-
-            lvMeldingen.Items.Add($"{serial.ReadLine().ToString()} {Da );
+            lvMeldingen.Items.Add($"{serial.ReadLine().ToString()} {DateTime.Now.ToString()}");
         }
 
     }
