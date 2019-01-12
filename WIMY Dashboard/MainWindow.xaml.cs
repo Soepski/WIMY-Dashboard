@@ -26,7 +26,7 @@ namespace WIMY_Dashboard
     public partial class MainWindow : Window
     {
         Database db = new Database();
-        SerialPort serial = new SerialPort("COM3", 9600);
+        SerialPort serial = new SerialPort("COM4", 9600);
         List<WIMY> wimylijst = new List<WIMY>();
         public MainWindow()
         {
@@ -36,10 +36,7 @@ namespace WIMY_Dashboard
                 serial.DataReceived += new SerialDataReceivedEventHandler(DataReceivedHandler);
 
                 serial.Open();
-                //DispatcherTimer timer = new DispatcherTimer();
-                //timer.Interval = TimeSpan.FromSeconds(5);
-                //timer.Tick += timer_Tick;
-                //timer.Start();
+
             }
             catch (Exception ex)
             {
@@ -94,13 +91,13 @@ namespace WIMY_Dashboard
                 if (cbStatus.Text == "Actief")
                 {
                     Status = Status.Replace("Inactief", "Actief");
-                    serial.WriteLine("U");
+                    serial.WriteLine("A");
 
                 }
                 else
                 {
                     Status = Status.Replace("Actief", "Inactief");
-                    serial.WriteLine("A");
+                    serial.WriteLine("U");
                 }
 
                 lvStatus.Items.RemoveAt(Index);
@@ -179,26 +176,21 @@ namespace WIMY_Dashboard
 
         public void DataReceivedHandler(object sender, SerialDataReceivedEventArgs e)
         {
-            string indata = serial.ReadExisting();
-            //string SerialMelding = serial.ReadLine().ToString();
-            lvMeldingen.Items.Add($"{indata} {DateTime.Now.ToString()}");
+            this.Dispatcher.Invoke(() =>
+            {
+                if (serial.IsOpen)
+                {
+                    string SerialMelding = serial.ReadLine().ToString();
+                    lvMeldingen.Items.Add($"{SerialMelding} {DateTime.Now.ToString()}");
+                    using (System.IO.StreamWriter file = new System.IO.StreamWriter(@"C:\Users\Public\LogFile.txt", true))
+                    {
+                        file.WriteLine(SerialMelding + $" {DateTime.Now.ToString()}");
+                        file.WriteLine("");
+                    }
+                }
+                serial.Open();
+            });
+            
         }
-
-        //void timer_Tick(object sender, EventArgs e)
-        //{
-        //    if (serial.IsOpen)
-        //    {
-        //        string SerialMelding = serial.ReadLine().ToString();
-        //        lvMeldingen.Items.Add($"{SerialMelding} {DateTime.Now.ToString()}");
-        //        using (System.IO.StreamWriter file = new System.IO.StreamWriter(@"C:\Users\Public\LogFile.txt", true))
-        //        {
-        //            file.WriteLine(SerialMelding + $" {DateTime.Now.ToString()}");
-        //            file.WriteLine("");
-        //        }
-        //    }
-        //    serial.Open();         
-
-        //}
-
     }
 }
