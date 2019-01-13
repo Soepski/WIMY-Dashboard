@@ -22,20 +22,29 @@ namespace WIMY_Dashboard
 
         public void Connect()
         {
-            this.Con = new MySqlConnection("Server=81.207.39.183;Database=wimy;Uid=WIMY;Pwd=W1MY123;");
-            this.Con.Open();
+            //try
+            //{
+                Con = new MySqlConnection("Server=81.207.39.183;Database=wimy;Uid=WIMY;Pwd=W1MY123;");
+                Con.Open();
+            //
+            //catch (Exception)
+            //{
+
+                //MessageBox.Show("Connectie met database niet gelukt");
+            //}
+            
         }
 
         public void Disconnect()
         {
-            this.Con.Close();
+            Con.Close();
         }
 
         public DataTable ExecuteStringQuery(String Query)
         {
             DataTable Result = new DataTable();
 
-            this.Connect();
+            Connect();
 
             if (this.Verify() == true)
             {
@@ -44,7 +53,7 @@ namespace WIMY_Dashboard
             }
             //MySqlCommand Command = new MySqlCommand(Query, Con);
 
-            this.Disconnect();
+            Disconnect();
 
             return Result;
         }
@@ -52,7 +61,7 @@ namespace WIMY_Dashboard
         public bool Verify()
         {
             Console.WriteLine(this.Con.State);
-            if (this.Con.State == ConnectionState.Open)
+            if (Con.State == ConnectionState.Open)
             {
                 return true;
             }
