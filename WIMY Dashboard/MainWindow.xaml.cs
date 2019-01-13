@@ -73,6 +73,11 @@ namespace WIMY_Dashboard
                 lvStatus.Items.Add($"WIMY { row["WIMY_ID"]}: { row["STATUS"]}");
             }
 
+            foreach (WIMY wimy in wimylijst)
+            {
+                lbAutoStatus.Items.Add(wimy.wimyid);
+            }
+
             db.Disconnect();
         }
 
@@ -188,7 +193,11 @@ namespace WIMY_Dashboard
                         file.WriteLine("");
                     }
                 }
-                serial.Open();
+                else
+                {
+                    serial.Open();
+                }
+                
             });
             
         }
