@@ -69,11 +69,14 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="AutoStatus.cs" />
     <Compile Include="Cluster.cs" />
     <Compile Include="Gebeurtenis.cs" />
     <Compile Include="Gebruiker.cs" />
+    <Compile Include="MeldingenHandler.cs" />
     <Compile Include="Monteur.cs" />
     <Compile Include="Onderhoud.cs" />
+    <Compile Include="Status.cs" />
     <Compile Include="WIMY.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
